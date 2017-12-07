@@ -20,13 +20,13 @@
 
 public class Point {
 
-    // Create final variables for point to dictate direction
-    // (Use (0,0) to be top left corner)
-    public static final Point NORTH = new Point(0, -1);
-    public static final Point EAST = new Point(1, 0);
-    public static final Point WEST = new Point(-1, 0);
-    public static final Point SOUTH = new Point(0, 1);
-    public static final Point NO_DIRECTION = new Point(0, 0);
+//    // Create final variables for point to dictate direction
+//    // (Use (0,0) to be top left corner)
+//    public static final Point NORTH = new Point(0, -1);
+//    public static final Point EAST = new Point(1, 0);
+//    public static final Point WEST = new Point(-1, 0);
+//    public static final Point SOUTH = new Point(0, 1);
+//    public static final Point NO_DIRECTION = new Point(0, 0);
 
     int x;
     int y;
@@ -38,18 +38,18 @@ public class Point {
      * @param direction
      * @return a direction (Point)
      */
-    public static Point getReverseDirection(Point direction) {
-
-        if (direction.equals(NORTH))
-            return SOUTH;
-        if (direction.equals(SOUTH))
-            return NORTH;
-        if (direction.equals(WEST))
-            return EAST;
-        if (direction.equals(EAST))
-            return WEST;
-        return NO_DIRECTION;
-    }
+//    public static Point getReverseDirection(Point direction) {
+//
+//        if (direction.equals(NORTH))
+//            return SOUTH;
+//        if (direction.equals(SOUTH))
+//            return NORTH;
+//        if (direction.equals(WEST))
+//            return EAST;
+//        if (direction.equals(EAST))
+//            return WEST;
+//        return NO_DIRECTION;
+//    }
 
     /**
      * Constructor that takes in x/y coordinates to build a Point in the game

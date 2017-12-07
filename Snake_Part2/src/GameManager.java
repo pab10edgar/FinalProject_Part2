@@ -1,3 +1,4 @@
+
 /**
  * @author Pablo Edgar
  * 
@@ -17,6 +18,8 @@
 
 import java.util.Scanner;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Random;
@@ -29,16 +32,14 @@ public class GameManager {
     private int boardWidth;
 
     // Make a seed to ensure point is not "random" for testing purposes
-    private static final int SEED = 300;
-    private final Random random = new Random(SEED);
+    //private static final int SEED = 300;
+    private final Random random = new Random();
 
     // ArrayList to keep track of walls on board, enable easy access
     ArrayList<Wall> wallsOnBoard;
 
-    // Scanners to keep track of hard-coded values for testing purposes
+    // Scanners
     private Scanner sc;
-    private Scanner sc1;
-    private Scanner sc2;
 
     // New Food and snake object
     Food food;
@@ -47,28 +48,16 @@ public class GameManager {
     // Boolean variable to keep track of current state of game
     boolean isGameEnded;
 
-    // Boolean variables to keep track of hard-coded values for testing
-    // (Set to false initially to allow switch between multiple test games)
-    boolean isSC = false;
-    boolean isSC1 = false;
-    boolean isSC2 = false;
-
     /**
      * Constructor for GameManager that takes in a file as parameter. Parses
      * through file and places walls in a list. Try/catch for file exception.
      * Do/while loop that adds snake in a valid location. Generates a new food.
      * Beep sound on computer if file not found to alert user
      * 
-     * @param a file f1
+     * @param a
+     *            file f1
      */
     public GameManager(String f1) {
-
-        // Hard-coded movement values for input 1 and 2 for testing purposes
-        // The program is capable of user input if scanners are deleted
-        sc = new Scanner(
-                "u u r r r r r r r d d r r r r r r u u u u u l l l l l l l l l l l l l d d d d r r r r r r r r r r r r r u u u u u l l l l l l l l l l l l l l d r");
-        sc1 = new Scanner("d d d d d d r r r r r r r r r u u u l l");
-        sc2 = new Scanner("d d r u l");
 
         // Try/Catch loop to pull in file and error check
         try {
@@ -143,8 +132,16 @@ public class GameManager {
         }
     }
 
+    public int getBoardHeight() {
+        return boardHeight;
+    }
+
+    public int getBoardWidth() {
+        return boardWidth;
+    }
+
     /**
-     * Generate Food at random valid location. 
+     * Generate Food at random valid location.
      * 
      * @return new Food object at Point P
      */
@@ -180,106 +177,62 @@ public class GameManager {
         return new Food(p);
     }
 
-    /**
-     * Distinguish which scanner to use for hard-coded movement testing
-     * purposes.
-     * 
-     * @param s1 a string
-     */
-    public void chooseHardCodedScanner(String s1) {
-
-        // Check string input to choose which scanner to use
-        if (s1.equalsIgnoreCase("first")) {
-            isSC = true;
-        }
-        if (s1.equalsIgnoreCase("second")) {
-            isSC1 = true;
-        }
-        if (s1.equalsIgnoreCase("restartsecond")) {
-            isSC2 = true;
-        }
-    }
+    // /**
+    // * Distinguish which scanner to use for hard-coded movement testing
+    // * purposes.
+    // *
+    // * @param s1 a string
+    // */
+    // public void chooseHardCodedScanner(String s1) {
+    //
+    // // Check string input to choose which scanner to use
+    // if (s1.equalsIgnoreCase("first")) {
+    // isSC = true;
+    // }
+    // if (s1.equalsIgnoreCase("second")) {
+    // isSC1 = true;
+    // }
+    // if (s1.equalsIgnoreCase("restartsecond")) {
+    // isSC2 = true;
+    // }
+    // }
 
     /**
      * Control snake movement. For testing purposes, use hard coded values.
      * Snake can move up, left, down and right.
      * 
-     * @param String chooseScanner for Switch
+     * @param String
+     *            chooseScanner for Switch
      */
-    public void controlSnake(String chooseScanner) {
-
-        this.chooseHardCodedScanner(chooseScanner);
-
-        if (isSC == true) {
-
-            // Switch to allow movement of snake, up/down/left/right
-            // Use starting letters to distinguish movement
-            switch (sc.next()) {
-            case "u":
-            case "U":
-                snake.changeDirection(Point.NORTH);
-                break;
-            case "d":
-            case "D":
-                snake.changeDirection(Point.SOUTH);
-                break;
-            case "r":
-            case "R":
-                snake.changeDirection(Point.EAST);
-            case "l":
-            case "L":
-                snake.changeDirection(Point.WEST);
-                break;
-            }
-            // Reset boolean variable
-            isSC = false;
-        }
-
-        // Repeat switch for other scanners
-        if (isSC1 == true) {
-            switch (sc1.next()) {
-            case "u":
-            case "U":
-                snake.changeDirection(Point.NORTH);
-                break;
-            case "d":
-            case "D":
-                snake.changeDirection(Point.SOUTH);
-                break;
-            case "r":
-            case "R":
-                snake.changeDirection(Point.EAST);
-            case "l":
-            case "L":
-                snake.changeDirection(Point.WEST);
-                break;
-            }
-            // Reset boolean variable
-            isSC1 = false;
-        }
-
-        // Repeat switch for other scanner
-        if (isSC2 == true) {
-            switch (sc2.next()) {
-            case "u":
-            case "U":
-                snake.changeDirection(Point.NORTH);
-                break;
-            case "d":
-            case "D":
-                snake.changeDirection(Point.SOUTH);
-                break;
-            case "r":
-            case "R":
-                snake.changeDirection(Point.EAST);
-            case "l":
-            case "L":
-                snake.changeDirection(Point.WEST);
-                break;
-            }
-            // Reset boolean variable
-            isSC2 = false;
-        }
+    public void controlSnake(Direction d) {
+        snake.changeDirection(d);
+//        // Scanner s = new Scanner(System.in);
+//        // String s1 = s.next();
+//
+//        // Switch to allow movement of snake, up/down/left/right
+//        // Use starting letters to distinguish movement
+//
+//        switch (d) {
+//        case NORTH:
+//            // case "U":
+//            snake.changeDirection(d);
+//            break;
+//        case SOUTH:
+//            // case "d":
+//            // case "D":
+//            snake.changeDirection(d);
+//            break;
+//        case EAST:
+//            // case "r":
+//            // case "R":
+//            snake.changeDirection(d);
+//            break;
+//        case WEST:
+//            // case "l":
+//            // case "L":
+//            snake.changeDirection(d);
+//            break;
+//        }
     }
 
     /**
@@ -290,6 +243,14 @@ public class GameManager {
      */
     public boolean gameEnded() {
         return isGameEnded;
+        
+    }
+    public boolean isWallHit() {
+        return snake.getWallHit();
+    }
+    
+    public boolean isSelfHit() {
+        return snake.getSelfHit();
     }
 
     /**
@@ -317,8 +278,8 @@ public class GameManager {
     }
 
     /**
-     * Override toString() method to print out board at current state. Print
-     * an 'X' for walls, a '.' for empty spaces, a 's' for snake, and a 'f' for
+     * Override toString() method to print out board at current state. Print an
+     * 'X' for walls, a '.' for empty spaces, a 's' for snake, and a 'f' for
      * food object.
      */
     @Override

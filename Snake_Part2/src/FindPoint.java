@@ -3,7 +3,7 @@
  * 
  * November 28, 2017
  * 
- * Final Project "Snake Game" Part 1 - FindPoint Interface
+ * Final Project "Snake Game" Part 2 - FindPoint Interface
  * 
  * Class Description: Common FindPoint interface with contains method. Implemented in Snake class. 
  * 

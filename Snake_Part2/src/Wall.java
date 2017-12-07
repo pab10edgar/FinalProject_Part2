@@ -3,7 +3,7 @@
  * 
  * November 28, 2017
  * 
- * Final Project "Snake Game" Part 1 - Wall Class
+ * Final Project "Snake Game" Part 2 - Wall Class
  * 
  * Class Description: The Wall class creates boundaries within game
  * that "kill" snake. Use starting and ending values, and (0,0) as top
