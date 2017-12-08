@@ -16,6 +16,7 @@ public enum Direction {
      * @param direction
      * @return a direction (Point)
      */
+    @SuppressWarnings("incomplete-switch")
     public Direction reverse() {
         switch (this) {
         case NORTH:

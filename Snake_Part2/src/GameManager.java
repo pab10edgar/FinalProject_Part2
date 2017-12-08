@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.io.FileNotFoundException;
 
+@SuppressWarnings("unused")
 public class GameManager {
 
     // Private variable for height and width of game
@@ -85,6 +86,7 @@ public class GameManager {
 
                 // Split at spaces
                 numInput = str1.split(" ");
+                
 
                 // Create new x/y points based on pairs of numbers in text file
                 Point p1 = new Point(Integer.parseInt(numInput[0]),
@@ -251,6 +253,10 @@ public class GameManager {
     
     public boolean isSelfHit() {
         return snake.getSelfHit();
+    }
+    
+    public boolean isFoodEaten() {
+        return snake.didEatFood();
     }
 
     /**
