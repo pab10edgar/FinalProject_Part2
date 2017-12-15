@@ -1,6 +1,6 @@
 <h2>SNAKE GAME by <i>Pablo Edgar</i></h2>
 
-**The classes contained within this repository are the work of <i>Pablo Edgar</i> and are for reference only. They may not be copied or distributed.
+**The classes contained within this repository are the work of <i>Pablo Edgar</i> and are for reference only. They may not be copied or distributed.**
 
 <h3>CONTENTS OF THIS FILE</h3>
 —————————————————
