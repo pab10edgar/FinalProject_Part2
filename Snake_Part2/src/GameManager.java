@@ -51,10 +51,8 @@ public class GameManager {
      * Constructor for GameManager that takes in a file as parameter. Parses
      * through file and places walls in a list. Try/catch for file exception.
      * Do/while loop that adds snake in a valid location. Generates a new food.
-     * Beep sound on computer if file not found to alert user
      * 
-     * @param a
-     *            file f1
+     * @param a file f1
      */
     public GameManager(String f1) {
 
@@ -99,7 +97,6 @@ public class GameManager {
         Point head;
 
         do {
-
             // Check for valid locations to add snake (head)
             isValidLocation = true;
             head = new Point(random.nextInt(boardWidth),
@@ -112,15 +109,15 @@ public class GameManager {
                 }
             }
         } while (!isValidLocation);
-
+        
         // Add a new snake at a valid point
         snake = new Snake(head);
 
         // Add a new food to board
         food = generateFood();
 
+        // Close scanner
         sc.close();
-
     }
 
     /**
@@ -153,25 +150,24 @@ public class GameManager {
 
         // Check to make sure random location is not a wall or snake
         do {
-
             validLocation = true;
 
             // Create a new point at a random x,y, which will become a food
             p = new Point(random.nextInt(boardWidth),
                     random.nextInt(boardHeight));
-
+            
             // Check that food is not being placed in a wall using for-each
             for (Wall wall : wallsOnBoard) {
                 if (wall.contains(p)) {
                     validLocation = false;
                 }
             }
-
+            
             // Check that point is not in a snake also
             if (snake.contains(p)) {
                 validLocation = false;
             }
-
+            
         } while (!validLocation);
 
         // Create a new Food at new valid random point
@@ -179,11 +175,11 @@ public class GameManager {
     }
 
     /**
-     * Control snake movement. For testing purposes, use hard coded values.
-     * Snake can move up, left, down and right.
+     * Control snake movement. Implement a direction as parameter to allow 
+     * snake to move either North, South, East or West
+     *
      * 
-     * @param String
-     *            chooseScanner for Switch
+     * @param Direction d that snake will move towards
      */
     public void controlSnake(Direction d) {
         snake.changeDirection(d);
@@ -201,7 +197,7 @@ public class GameManager {
     }
 
     /**
-     * Check if snake it a wall
+     * Check if snake hit a wall
      * 
      * @return boolean
      */
