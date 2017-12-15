@@ -23,8 +23,7 @@ public class Food {
     /**
      * Constructor for Food object that places food at a point (x, y)
      * 
-     * @param point
-     *            p for food location
+     * @param point p for food location
      */
     public Food(Point p) {
         this.point = p;
@@ -33,8 +32,7 @@ public class Food {
     /**
      * Contains method to check if point is equal to a food object
      * 
-     * @param Point
-     *            p
+     * @param Point p
      * @return boolean value whether point equals food
      */
     public boolean contains(Point p) {
@@ -47,7 +45,6 @@ public class Food {
      * @return int x
      */
     public int getX() {
-        
         return point.getX();
     }
 
