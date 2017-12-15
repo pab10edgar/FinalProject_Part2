@@ -1,4 +1,4 @@
-<h2>SNAKE GAME README</h2>
+<h2>SNAKE GAME by <i>Pablo Edgar</i></h2>
 
 <h3>CONTENTS OF THIS FILE</h3>
 —————————————————
