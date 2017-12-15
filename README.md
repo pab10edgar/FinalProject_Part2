@@ -20,12 +20,12 @@
 
 <h3>INTRODUCTION</h3> 
 ——————————————————
-Final Project for CS 251 - Runs a Snake Game playable by the user. 
+<br>Final Project for CS 251 - Runs a Snake Game playable by the user. 
 
 <h3>REQUIREMENTS</h3>
 ——————————————————
-JRE 7+
-(Optional .txt file)  - Passed as args[1] in command line
+<br>JRE 7+
+<br>(Optional .txt file)  - Passed as args[1] in command line
 
 <h3>GAME INFORMATION</h3>
 ——————————————————
