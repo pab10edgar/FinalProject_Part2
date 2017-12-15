@@ -28,12 +28,11 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.SwingUtilities;
 
 public class SnakeMain {
+    
     public static String arg = "";
 
     // Default constructor
-    public SnakeMain() {
-
-    }
+    public SnakeMain() {}
 
     /**
      * Gets current argument that is passes in command line
@@ -66,7 +65,6 @@ public class SnakeMain {
                                 .getResourceAsStream("/backgroundMusic.wav");
                         InputStream bufferedIn = new BufferedInputStream(
                                 soundInputStream);
-
                         AudioInputStream audioIn = AudioSystem
                                 .getAudioInputStream(bufferedIn);
 
@@ -85,36 +83,34 @@ public class SnakeMain {
                     } catch (LineUnavailableException h) {
                         h.printStackTrace();
                     }
-
+                    // Create a new SnakeWindow with new GameManager
                     new SnakeWindow(game);
                 }
             });
-
+            
         } else {
-
             // Apply custom map config file to new GameManager
             GameManager game = new GameManager(args[0]);
+            
             // Convert argument to string
             arg = args[0].toString();
 
-            SwingUtilities.invokeLater(new Runnable() {
-
+            SwingUtilities.invokeLater(new Runnable() {  
                 @SuppressWarnings("static-access")
                 public void run() {
-
                     try {
                         // Open an audio input stream.
                         InputStream soundInputStream = getClass()
                                 .getResourceAsStream("/backgroundMusic.wav");
                         InputStream bufferedIn = new BufferedInputStream(
                                 soundInputStream);
-
                         AudioInputStream audioIn = AudioSystem
                                 .getAudioInputStream(bufferedIn);
 
                         // Get a sound clip resource.
                         Clip clip = AudioSystem.getClip();
-
+                        
+                        // Load sample from audio stream
                         clip.open(audioIn);
                         clip.start();
                         clip.loop(clip.LOOP_CONTINUOUSLY);
