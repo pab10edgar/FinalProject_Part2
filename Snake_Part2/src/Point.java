@@ -1,9 +1,9 @@
 /**
  * @author Pablo Edgar
  * 
- * November 28, 2017
+ * December 6th, 2017
  * 
- * Final Project "Snake Game" Part 1 - Point Class
+ * Final Project "Snake Game" Part 2 - Point Class
  * 
  * Class Description: The Point class allows the entire game and its
  * objects to be referenced by (x,y). Also gives direction to snake
@@ -20,36 +20,8 @@
 
 public class Point {
 
-//    // Create final variables for point to dictate direction
-//    // (Use (0,0) to be top left corner)
-//    public static final Point NORTH = new Point(0, -1);
-//    public static final Point EAST = new Point(1, 0);
-//    public static final Point WEST = new Point(-1, 0);
-//    public static final Point SOUTH = new Point(0, 1);
-//    public static final Point NO_DIRECTION = new Point(0, 0);
-
     int x;
     int y;
-
-    /**
-     * Opposing direction for functionality of external method. Prevents snake
-     * from moving ontop of itself
-     * 
-     * @param direction
-     * @return a direction (Point)
-     */
-//    public static Point getReverseDirection(Point direction) {
-//
-//        if (direction.equals(NORTH))
-//            return SOUTH;
-//        if (direction.equals(SOUTH))
-//            return NORTH;
-//        if (direction.equals(WEST))
-//            return EAST;
-//        if (direction.equals(EAST))
-//            return WEST;
-//        return NO_DIRECTION;
-//    }
 
     /**
      * Constructor that takes in x/y coordinates to build a Point in the game

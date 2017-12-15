@@ -1,10 +1,9 @@
-
 /**
  * @author Pablo Edgar
  * 
- * November 28, 2017
+ * December 7th, 2017
  * 
- * Final Project "Snake Game" Part 1 - Snake Class
+ * Final Project "Snake Game" Part 2 - Snake Class
  * 
  * Class Description:
  * The Snake class gives the "Snake" movement. Handles logic of snake. Snake is represented by a LinkedList
@@ -48,13 +47,6 @@ public class Snake implements FindPoint {
      * @param point
      *            direction
      */
-    // public void changeDirection(Point newDirection) {
-    // if (direction != null
-    // && direction.equals(Point.getReverseDirection(newDirection)))
-    // return;
-    // direction = newDirection;
-    // }
-
     public void changeDirection(Direction newDirection) {
         if (direction != newDirection.reverse())
             direction = newDirection;
@@ -66,27 +58,6 @@ public class Snake implements FindPoint {
      * 'tail' by polling the last element in the LinkedList. If a food object
      * is "eaten", set food equal to false.
      */
-    // public void move() {
-    //
-    // // Print out current direction that snake is moving for testing
-    // // purposes
-    // System.out.println(direction);
-    //
-    // // Get head by peeking at first element in list
-    // Point head = snake.peekFirst();
-    //
-    // // Add new point to front of snake to allow movement forward in
-    // // specified direction
-    // snake.addFirst(new Point(head.getX() + direction.getX(),
-    // head.getY() + direction.getY()));
-    //
-    // if (food) {
-    // food = false;
-    // } else {
-    // // Remove tail from snake
-    // snake.pollLast();
-    // }
-    // }
     public void move() {
 
         // Print out current direction that snake is moving for testing
@@ -186,7 +157,12 @@ public class Snake implements FindPoint {
         // For testing, inform user that food was eaten
         System.out.println("Snake ate a food");
     }
-    
+
+    /**
+     * Return current state of Food
+     * 
+     * @return boolean
+     */
     public boolean didEatFood() {
         return food;
     }
@@ -198,8 +174,6 @@ public class Snake implements FindPoint {
     public boolean contains(Point p) {
         return snake.contains(p);
     }
-    
-    
 
     /**
      * Get method to locate head. Retrieves, but does not remove, the first
@@ -211,15 +185,22 @@ public class Snake implements FindPoint {
         return snake.peekFirst();
     }
 
+    /**
+     * Return snake size at a given instance
+     * 
+     * @return int snake size
+     */
     public int getSnakeSize() {
-        // TODO Auto-generated method stub
         return snake.size();
     }
 
+    /**
+     * Return a point on the snake, by getting specific location on list
+     * 
+     * @param i
+     * @return point
+     */
     public Point getPointOnSnake(int i) {
-        // TODO Auto-generated method stub
         return snake.get(i);
     }
 }
-
-

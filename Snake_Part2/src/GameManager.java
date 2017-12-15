@@ -2,9 +2,9 @@
 /**
  * @author Pablo Edgar
  * 
- * November 28, 2017
+ * December 7th, 2017
  * 
- * Final Project "Snake Game" Part 1 - GameManager Class
+ * Final Project "Snake Game" Part 2 - GameManager Class
  * 
  * Class Description:
  * The GameManager class handles the snake, wall, and food book-keeping.
@@ -16,14 +16,13 @@
  * increases as the game progresses.
  */
 
-import java.util.Scanner;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Random;
-import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 @SuppressWarnings("unused")
 public class GameManager {
@@ -32,8 +31,7 @@ public class GameManager {
     private int boardHeight;
     private int boardWidth;
 
-    // Make a seed to ensure point is not "random" for testing purposes
-    //private static final int SEED = 300;
+    // Random point generation
     private final Random random = new Random();
 
     // ArrayList to keep track of walls on board, enable easy access
@@ -60,84 +58,85 @@ public class GameManager {
      */
     public GameManager(String f1) {
 
-        // Try/Catch loop to pull in file and error check
-        try {
+        // Initialize isGameEnded
+        isGameEnded = false;
+        InputStream in = getClass().getResourceAsStream(f1);
+        Scanner sc = new Scanner(in);
 
-            // Initialize isGameEnded
-            isGameEnded = false;
+        String gameboardDimensions = sc.nextLine();
 
-            Scanner sc = new Scanner(new File(f1));
-            String gameboardDimensions = sc.nextLine();
+        // Gather numbers from text file in a array. Split at spaces to
+        // separate input
+        String[] numInput = gameboardDimensions.split(" ");
 
-            // Gather numbers from text file in a array. Split at spaces to
-            // separate input
-            String[] numInput = gameboardDimensions.split(" ");
+        // First and second number are board width and height
+        boardWidth = Integer.parseInt(numInput[0]);
+        boardHeight = Integer.parseInt(numInput[1]);
 
-            // First and second number are board width and height
-            boardWidth = Integer.parseInt(numInput[0]);
-            boardHeight = Integer.parseInt(numInput[1]);
+        wallsOnBoard = new ArrayList<Wall>();
 
-            wallsOnBoard = new ArrayList<Wall>();
+        // Parse through file while there is still other lines
+        while (sc.hasNextLine()) {
 
-            // Parse through file while there is still other lines
-            while (sc.hasNextLine()) {
+            String str1 = sc.nextLine();
 
-                String str1 = sc.nextLine();
+            // Split at spaces
+            numInput = str1.split(" ");
 
-                // Split at spaces
-                numInput = str1.split(" ");
-                
+            // Create new x/y points based on pairs of numbers in text file
+            Point p1 = new Point(Integer.parseInt(numInput[0]),
+                    Integer.parseInt(numInput[1]));
 
-                // Create new x/y points based on pairs of numbers in text file
-                Point p1 = new Point(Integer.parseInt(numInput[0]),
-                        Integer.parseInt(numInput[1]));
+            Point p2 = new Point(Integer.parseInt(numInput[2]),
+                    Integer.parseInt(numInput[3]));
 
-                Point p2 = new Point(Integer.parseInt(numInput[2]),
-                        Integer.parseInt(numInput[3]));
-
-                // Add new points (Walls) to a list to keep track
-                wallsOnBoard.add(new Wall(p1, p2));
-            }
-
-            // Variables for valid location and point head
-            boolean isValidLocation;
-            Point head;
-
-            do {
-
-                // Check for valid locations to add snake (head)
-                isValidLocation = true;
-                head = new Point(random.nextInt(boardWidth),
-                        random.nextInt(boardHeight));
-
-                // Check all walls to ensure random point is not in wall
-                for (Wall wall : wallsOnBoard) {
-                    if (wall.contains(head)) {
-                        isValidLocation = false;
-                    }
-                }
-            } while (!isValidLocation);
-
-            // Add a new snake at a valid point
-            snake = new Snake(head);
-
-            // Add a new food to board
-            food = generateFood();
-
-            sc.close();
-
-            // Catch file exception
-        } catch (FileNotFoundException e) {
-            Toolkit.getDefaultToolkit().beep();
-            System.out.println(
-                    "Can't find that file! Try adding a different one.");
+            // Add new points (Walls) to a list to keep track
+            wallsOnBoard.add(new Wall(p1, p2));
         }
+
+        // Variables for valid location and point head
+        boolean isValidLocation;
+        Point head;
+
+        do {
+
+            // Check for valid locations to add snake (head)
+            isValidLocation = true;
+            head = new Point(random.nextInt(boardWidth),
+                    random.nextInt(boardHeight));
+
+            // Check all walls to ensure random point is not in wall
+            for (Wall wall : wallsOnBoard) {
+                if (wall.contains(head)) {
+                    isValidLocation = false;
+                }
+            }
+        } while (!isValidLocation);
+
+        // Add a new snake at a valid point
+        snake = new Snake(head);
+
+        // Add a new food to board
+        food = generateFood();
+
+        sc.close();
+
     }
 
+    /**
+     * Return Height of Game Board
+     * 
+     * @return boardHeight
+     */
     public int getBoardHeight() {
         return boardHeight;
     }
 
+    /**
+     * Return Width of Game Board
+     * 
+     * @return boardWidth
+     */
     public int getBoardWidth() {
         return boardWidth;
     }
@@ -179,26 +178,6 @@ public class GameManager {
         return new Food(p);
     }
 
-    // /**
-    // * Distinguish which scanner to use for hard-coded movement testing
-    // * purposes.
-    // *
-    // * @param s1 a string
-    // */
-    // public void chooseHardCodedScanner(String s1) {
-    //
-    // // Check string input to choose which scanner to use
-    // if (s1.equalsIgnoreCase("first")) {
-    // isSC = true;
-    // }
-    // if (s1.equalsIgnoreCase("second")) {
-    // isSC1 = true;
-    // }
-    // if (s1.equalsIgnoreCase("restartsecond")) {
-    // isSC2 = true;
-    // }
-    // }
-
     /**
      * Control snake movement. For testing purposes, use hard coded values.
      * Snake can move up, left, down and right.
@@ -208,33 +187,6 @@ public class GameManager {
      */
     public void controlSnake(Direction d) {
         snake.changeDirection(d);
-//        // Scanner s = new Scanner(System.in);
-//        // String s1 = s.next();
-//
-//        // Switch to allow movement of snake, up/down/left/right
-//        // Use starting letters to distinguish movement
-//
-//        switch (d) {
-//        case NORTH:
-//            // case "U":
-//            snake.changeDirection(d);
-//            break;
-//        case SOUTH:
-//            // case "d":
-//            // case "D":
-//            snake.changeDirection(d);
-//            break;
-//        case EAST:
-//            // case "r":
-//            // case "R":
-//            snake.changeDirection(d);
-//            break;
-//        case WEST:
-//            // case "l":
-//            // case "L":
-//            snake.changeDirection(d);
-//            break;
-//        }
     }
 
     /**
@@ -245,16 +197,32 @@ public class GameManager {
      */
     public boolean gameEnded() {
         return isGameEnded;
-        
+
     }
+
+    /**
+     * Check if snake it a wall
+     * 
+     * @return boolean
+     */
     public boolean isWallHit() {
         return snake.getWallHit();
     }
-    
+
+    /**
+     * Check if snake hit itself
+     * 
+     * @return boolean
+     */
     public boolean isSelfHit() {
         return snake.getSelfHit();
     }
-    
+
+    /**
+     * Check if snake ate food
+     * 
+     * @return boolean
+     */
     public boolean isFoodEaten() {
         return snake.didEatFood();
     }

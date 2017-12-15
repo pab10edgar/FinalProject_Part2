@@ -1,19 +1,19 @@
 /**
  * @author Pablo Edgar
  * 
- *         November 28, 2017
+ * December 6th, 2017
  * 
- *         Final Project "Snake Game" Part 1 - Food Class
+ * Final Project "Snake Game" Part 2 - Food Class
  * 
- *         Class Description: The Food class creates a Point that is
- *         represented as a "Food" object. The snake can "eat" this point.
+ * Class Description: The Food class creates a Point that is
+ * represented as a "Food" object. The snake can "eat" this point.
  * 
- *         Game Description: In a snake game the objective is to navigate a
- *         snake through a walled space (or maze), consuming food along the
- *         way. The user must avoid colliding with walls or the snake’s
- *         ever-growing body. The length of the snake increases each time food
- *         is consumed, so the difficulty of avoiding a collision increases as
- *         the game progresses.
+ * Game Description: In a snake game the objective is to navigate a
+ * snake through a walled space (or maze), consuming food along the
+ * way. The user must avoid colliding with walls or the snake’s
+ * ever-growing body. The length of the snake increases each time food
+ * is consumed, so the difficulty of avoiding a collision increases as
+ * the game progresses.
  */
 
 public class Food {
@@ -41,11 +41,21 @@ public class Food {
         return p.equals(point);
     }
 
+    /**
+     * Get x coordinate of food
+     * 
+     * @return int x
+     */
     public int getX() {
-        // TODO Auto-generated method stub
+        
         return point.getX();
     }
 
+    /**
+     * Get y coordinate of food
+     * 
+     * @return int y
+     */
     public int getY() {
         return point.getY();
     }

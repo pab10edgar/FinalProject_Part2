@@ -1,7 +1,8 @@
+
 /**
  * @author Pablo Edgar
  * 
- * November 28, 2017
+ * December 7th, 2017
  * 
  * Final Project "Snake Game" Part 2 - SnakeWindow
  * 
@@ -35,7 +36,6 @@ import java.awt.image.BufferedImage;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Scanner;
-
 import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
@@ -84,7 +84,7 @@ public class SnakeWindow extends JFrame implements ActionListener, KeyListener {
     GameManager game2;
     FlowLayout flow;
     Dimension d;
-
+    ClassLoader cl = this.getClass().getClassLoader();
     static int level = 1;
     static int gameScoreAmount = 0;
 
@@ -99,27 +99,31 @@ public class SnakeWindow extends JFrame implements ActionListener, KeyListener {
 
         d = new Dimension(getWidth(), 40);
         this.game = game;
-        this.setTitle("Snake");
+        this.setTitle("Snake Game - By Pablo Edgar");
 
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        // Layout of buttonPanel
         flow = new FlowLayout(0, 10, 0);
+
+        // Create Button
         startButton = new JButton("Start");
         startButton.addActionListener(this);
         startButton.addKeyListener(this);
 
+        // Create JLabels and set text/font
         myLevel = new JLabel("DIFFICULTY LEVEL:");
         levelIs = new JLabel();
         levelIs.setText(Integer.toString(level));
-
         score = new JLabel();
         score.setText(Integer.toString(gameScoreAmount));
-
         instructions = new JLabel("SCORE:");
         arrows = new JLabel(
                 "Press start, then press an arrow key to start moving!");
+
+        // Set font
         f = arrows.getFont();
         g = score.getFont();
-
         arrows.setFont(f.deriveFont(f.getStyle() | Font.ITALIC));
         score.setFont(g.deriveFont(g.getStyle() | Font.BOLD));
         levelIs.setForeground(Color.BLUE);
@@ -127,11 +131,11 @@ public class SnakeWindow extends JFrame implements ActionListener, KeyListener {
 
         gamePanel = new GamePanel();
         buttonPanel = new JPanel();
+
+        // Add components to buttonPanel
         buttonPanel.setLayout(flow);
         buttonPanel.setPreferredSize(d);
-
         buttonPanel.setBackground(Color.LIGHT_GRAY);
-
         buttonPanel.add(arrows);
         buttonPanel.add(startButton);
         buttonPanel.add(instructions);
@@ -139,26 +143,32 @@ public class SnakeWindow extends JFrame implements ActionListener, KeyListener {
         buttonPanel.add(myLevel);
         buttonPanel.add(levelIs);
 
+        // Add components to SnakeWindow including KeyListeners
         this.addKeyListener(this);
         this.setFocusable(true);
         this.setFocusTraversalKeysEnabled(false);
         this.getContentPane().add(gamePanel, BorderLayout.CENTER);
         this.getContentPane().add(buttonPanel, BorderLayout.PAGE_END);
+
+        // Set size of Frame
         this.setSize(800, 800);
         this.setVisible(true);
 
+        // Import images used in game
         try {
-
-            burgerImg = ImageIO.read(new File("bur.png"));
-            wallImg = ImageIO.read(new File("brick-wall.jpg"));
-            snakeImg = ImageIO.read(new File("snakeSkin2.png"));
-            headImg = ImageIO.read(new File("snakeHead.png"));
-            gameImg = ImageIO.read(new File("bg.png"));
+            burgerImg = ImageIO
+                    .read(getClass().getResourceAsStream("/bur.png"));
+            wallImg = ImageIO
+                    .read(getClass().getResourceAsStream("/brick-wall.jpg"));
+            snakeImg = ImageIO
+                    .read(getClass().getResourceAsStream("/snakeSkin2.png"));
+            headImg = ImageIO
+                    .read(getClass().getResourceAsStream("/snakeHead.png"));
+            gameImg = ImageIO.read(getClass().getResourceAsStream("/bg.png"));
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-        // timer.start();
 
     }
 
@@ -167,13 +177,11 @@ public class SnakeWindow extends JFrame implements ActionListener, KeyListener {
      */
     @Override
     public void keyTyped(KeyEvent e) {
-        // TODO Auto-generated method stub
-
     }
 
     /**
      * keyPressed method that translates KeyEvent (Arrow Keys) into Snake
-     * movement. Set
+     * movement.
      */
     @Override
     public void keyPressed(KeyEvent e) {
@@ -203,38 +211,51 @@ public class SnakeWindow extends JFrame implements ActionListener, KeyListener {
         }
     }
 
+    /**
+     * Generic Override due to ActionListener Implementaion. Not used.
+     */
     @Override
     public void keyReleased(KeyEvent e) {
-        // TODO Auto-generated method stub
     }
 
+    /**
+     * Override actionPerformed to give directions to button
+     */
     @SuppressWarnings("static-access")
     @Override
     public void actionPerformed(ActionEvent e) {
-
-        // int gameScoreAmount = 0;
-        // String gameScore = Integer.toString(gameScoreAmount);
 
         Object src = e.getSource();
 
         if (src == timer) {
 
+            // Redraw board
             game.updateBoard();
 
             if (game.isFoodEaten()) {
+
+                // Increase score by 100 when isFoodEaten() is true
                 this.gameScoreAmount = this.gameScoreAmount + 100;
                 this.score.setText(Integer.toString(gameScoreAmount));
+
                 try {
                     // Open an audio input stream.
-                    File soundFile = new File("burp.wav");
+                    InputStream soundInputStream = getClass()
+                            .getResourceAsStream("/burp.wav");
+                    InputStream bufferedIn = new BufferedInputStream(
+                            soundInputStream);
+
                     AudioInputStream audioIn = AudioSystem
-                            .getAudioInputStream(soundFile);
+                            .getAudioInputStream(bufferedIn);
+
                     // Get a sound clip resource.
                     Clip clip = AudioSystem.getClip();
+
                     // Open audio clip and load samples from the audio input
                     // stream.
                     clip.open(audioIn);
                     clip.start();
+
                 } catch (UnsupportedAudioFileException f) {
                     f.printStackTrace();
                 } catch (IOException g) {
@@ -245,18 +266,28 @@ public class SnakeWindow extends JFrame implements ActionListener, KeyListener {
 
             }
 
+            // Add sound effect if snake hits itself
             if (game.gameEnded() && game.isSelfHit()) {
+
                 try {
                     // Open an audio input stream.
-                    File soundFile = new File("bubbles.wav");
+                    InputStream soundInputStream = getClass()
+                            .getResourceAsStream("/bubbles.wav");
+
+                    InputStream bufferedIn = new BufferedInputStream(
+                            soundInputStream);
+
                     AudioInputStream audioIn = AudioSystem
-                            .getAudioInputStream(soundFile);
+                            .getAudioInputStream(bufferedIn);
+
                     // Get a sound clip resource.
                     Clip clip = AudioSystem.getClip();
+
                     // Open audio clip and load samples from the audio input
                     // stream.
                     clip.open(audioIn);
                     clip.start();
+
                 } catch (UnsupportedAudioFileException f) {
                     f.printStackTrace();
                 } catch (IOException g) {
@@ -264,8 +295,8 @@ public class SnakeWindow extends JFrame implements ActionListener, KeyListener {
                 } catch (LineUnavailableException h) {
                     h.printStackTrace();
                 }
-                // timer.stop();
 
+                // JOption pane with various choices after snake dies
                 Object[] options = { "Restart Game at Level 1",
                         "Restart and Increase Difficulty (Snake Speed)",
                         "Exit Game" };
@@ -274,54 +305,54 @@ public class SnakeWindow extends JFrame implements ActionListener, KeyListener {
                         "Game Over!", JOptionPane.YES_NO_CANCEL_OPTION,
                         JOptionPane.WARNING_MESSAGE, null, options, options[2]);
 
+                // Give commmands to each option in JOption pane
                 if (n == 0) {
 
+                    // End game
                     dispose();
+                    // Reset variables
                     DELAY = 480;
                     level = 1;
                     this.gameScoreAmount = 0;
                     this.levelIs.setText(Integer.toString(level));
+
+                    // Start a new instance of a game depending on config map
                     if (!SnakeMain.arg.equals("")) {
                         GameManager game1 = new GameManager(SnakeMain.arg);
                         new SnakeWindow(game1);
                     } else if (SnakeMain.arg.equals("")) {
-                        GameManager game1 = new GameManager("maze-cross.txt");
+                        GameManager game1 = new GameManager("/maze-cross.txt");
                         new SnakeWindow(game1);
                     } else {
-                        GameManager game1 = new GameManager("maze-cross.txt");
+                        GameManager game1 = new GameManager("/maze-cross.txt");
                         new SnakeWindow(game1);
                     }
 
-                    // GameManager game1 = new GameManager("maze-cross.txt");
-                    // new SnakeWindow(game1);
-
                 } else if (n == 1) {
+                    // End game
                     dispose();
+                    // Increase difficulty
                     if (DELAY >= 120) {
                         DELAY = DELAY - 90;
                     }
+                    // Increase level
                     level++;
                     this.gameScoreAmount = 0;
+
+                    // Start new instance of game
                     if (!SnakeMain.arg.equals("")) {
                         GameManager game1 = new GameManager(SnakeMain.arg);
                         new SnakeWindow(game1);
                     } else if (SnakeMain.arg.equals("")) {
-                        GameManager game1 = new GameManager("maze-cross.txt");
+                        GameManager game1 = new GameManager("/maze-cross.txt");
                         new SnakeWindow(game1);
                     } else {
-                        GameManager game1 = new GameManager("maze-cross.txt");
+                        GameManager game1 = new GameManager("/maze-cross.txt");
                         new SnakeWindow(game1);
                     }
                 }
-                // } else if (n == 2) {
-                // dispose();
-                // DELAY = 480;
-                // level = 1;
-                // this.levelIs.setText(Integer.toString(level));
-                // GameManager game2 = new GameManager("src/maze-simple.txt");
-                // new SnakeWindow(game2);
-                // this.setSize(1000, 800);
-                // } else
+
+                // Exit game if option pressed without loading new game
                 else {
                     dispose();
                 }
@@ -331,15 +362,22 @@ public class SnakeWindow extends JFrame implements ActionListener, KeyListener {
 
                 try {
                     // Open an audio input stream.
-                    File soundFile = new File("bomb.wav");
+                    InputStream soundInputStream = getClass()
+                            .getResourceAsStream("/bomb.wav");
+                    InputStream bufferedIn = new BufferedInputStream(
+                            soundInputStream);
+
                     AudioInputStream audioIn = AudioSystem
-                            .getAudioInputStream(soundFile);
+                            .getAudioInputStream(bufferedIn);
+
                     // Get a sound clip resource.
                     Clip clip = AudioSystem.getClip();
+
                     // Open audio clip and load samples from the audio input
                     // stream.
                     clip.open(audioIn);
                     clip.start();
+
                 } catch (UnsupportedAudioFileException f) {
                     f.printStackTrace();
                 } catch (IOException g) {
@@ -347,7 +385,6 @@ public class SnakeWindow extends JFrame implements ActionListener, KeyListener {
                 } catch (LineUnavailableException h) {
                     h.printStackTrace();
                 }
-                // timer.stop();
 
                 Object[] options = { "Restart Game at Level 1",
                         "Restart and Increase Difficulty (Snake Speed)",
@@ -364,47 +401,39 @@ public class SnakeWindow extends JFrame implements ActionListener, KeyListener {
                     level = 1;
                     this.gameScoreAmount = 0;
                     this.levelIs.setText(Integer.toString(level));
+
                     if (!SnakeMain.arg.equals("")) {
                         GameManager game1 = new GameManager(SnakeMain.arg);
                         new SnakeWindow(game1);
                     } else if (SnakeMain.arg.equals("")) {
-                        GameManager game1 = new GameManager("maze-cross.txt");
+                        GameManager game1 = new GameManager("/maze-cross.txt");
                         new SnakeWindow(game1);
                     } else {
-                        GameManager game1 = new GameManager("maze-cross.txt");
+                        GameManager game1 = new GameManager("/maze-cross.txt");
                         new SnakeWindow(game1);
                     }
 
-                    // GameManager game1 = new GameManager("maze-cross.txt");
-                    // new SnakeWindow(game1);
-
                 } else if (n == 1) {
+
                     dispose();
                     if (DELAY >= 120) {
                         DELAY = DELAY - 90;
                     }
                     level++;
                     this.gameScoreAmount = 0;
+
                     if (!SnakeMain.arg.equals("")) {
                         GameManager game1 = new GameManager(SnakeMain.arg);
                         new SnakeWindow(game1);
                     } else if (SnakeMain.arg.equals("")) {
-                        GameManager game1 = new GameManager("maze-cross.txt");
+                        GameManager game1 = new GameManager("/maze-cross.txt");
                         new SnakeWindow(game1);
                     } else {
-                        GameManager game1 = new GameManager("maze-cross.txt");
+                        GameManager game1 = new GameManager("/maze-cross.txt");
                         new SnakeWindow(game1);
                     }
                 }
-                // else if (n == 2) {
-                // dispose();
-                // DELAY = 480;
-                // level = 1;
-                // this.levelIs.setText(Integer.toString(level));
-                // GameManager game2 = new GameManager("src/maze-simple.txt");
-                // new SnakeWindow(game2);
-                // this.setSize(1000,800);
-                // } else {
+
                 else {
                     dispose();
                 }
@@ -412,26 +441,27 @@ public class SnakeWindow extends JFrame implements ActionListener, KeyListener {
             }
             repaint();
 
+            // Allow start button to start/pause game when pressd by using
+            // timer
         } else if (src == startButton) {
 
             if (!timer.isRunning()) {
                 timer.start();
-
                 startButton.setText("Pause Game");
 
             } else {
 
                 timer.stop();
-
                 startButton.setText("Start Game");
             }
         }
     }
 
-    
-
     private class GamePanel extends JPanel {
 
+        /**
+         * Override paintComponent to place graphics on JPanel
+         */
         @Override
         public void paintComponent(Graphics g2) {
 
@@ -445,46 +475,32 @@ public class SnakeWindow extends JFrame implements ActionListener, KeyListener {
             int x = 0;
             int y = 0;
 
-            // boolean flag = true;
+            // Iterate through char array and place appropriate image with
+            // corresponding case
             for (char c : symbols) {
+
+                // Utilize toString() from GameManager to get variables
                 switch (c) {
                 case 'X':
                     g2.setColor(Color.BLACK);
-                    // g2.fillRect(x, y, width, height);
                     g2.drawImage(wallImg, x, y, width, height, null);
                     break;
-
                 case 's':
-                    // if(flag) {
                     g2.setColor(Color.GREEN);
-                    // g2.fillRect(x, y, width, height);
-                    // g2.drawImage(headImg, x, y, width, height, null);
-                    // flag = false;
-                    // }
-                    // else {
                     g2.drawImage(snakeImg, x, y, width, height, null);
-
-                    // }
                     break;
-
                 case 'f':
                     g2.setColor(Color.ORANGE);
                     g2.drawImage(burgerImg, x, y, width, height, null);
                     break;
-
                 case '.':
-                    // g2.setColor(Color.WHITE);
-                    // g2.drawImage(gameImg, x, y, width, height, null);
-                    // g2.fillRect(x, y, width, height);
                     break;
-
                 case '\n':
+                    // Increase height and move down a row
                     y += height;
                     x = 0;
                     continue;
                 }
-
-                // g2.fillRect(x, y, width, height);
                 x += width;
             }
         }
