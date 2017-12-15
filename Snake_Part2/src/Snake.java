@@ -27,6 +27,7 @@ public class Snake implements FindPoint {
     LinkedList<Point> snake;
     Direction direction;
 
+    // Initialize boolean variables
     private boolean food = false;
     public boolean wallHit = false;
     public boolean selfHit = false;
@@ -44,8 +45,7 @@ public class Snake implements FindPoint {
      * Check to make sure Snake cannot move on-top of itself and go LEFT-RIGHT,
      * UP-DOWN, etc in succession
      * 
-     * @param point
-     *            direction
+     * @param point direction
      */
     public void changeDirection(Direction newDirection) {
         if (direction != newDirection.reverse())
