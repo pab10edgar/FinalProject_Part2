@@ -8,8 +8,7 @@
 <li>Objects in Game</li>
 <li>Added Extras</li>
 <li>Known Bugs</li>
-<li>Feature Requests</li>
-<li> Description of Project Classes</li>
+<li>Description of Project Classes</li>
 <li>Algorithm Details</li>
 <li>GamePlay and Scoring</li>
 <li>Moving the Snake</li>
