@@ -53,7 +53,6 @@ public enum Direction {
             return EAST;
         case EAST:
             return WEST;
-
         }
         return NO_DIRECTION;
     }
