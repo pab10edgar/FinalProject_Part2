@@ -71,8 +71,6 @@ Left Arrow - CHANGE DIRECTION LEFT<br>
 
 <h4>KNOWN BUGS:</h4>
 
-- Application only resizable to certain extent. May display bottom menu incorrectly if grown/shrunk too much from original loading dimensions.
-
 - Food may display in non-accessible location despite being a valid location (depends on map configuration file). **See Food description below for valid location guidelines 
 
 <h4>DESCRIPTION OF PROJECT CLASSES:</h4>
@@ -150,7 +148,7 @@ If a snake collides with a wall or its own body, a popup is displayed on the scr
 
 <h4>GAME MAPS:</h4>
 
-When the user opens the JAR file, a default map with set location of walls is loaded. This map contains walls around all 4 edges of the application screen, and contain a "cross" of walls in the center. 
+When the user runs the program, a default map with set location of walls is loaded. This map contains walls around all 4 edges of the application screen, and contain a "cross" of walls in the center. 
 
-The user can choose to load a custom wall configuration file to the JAR, by passing an argument containing the file name loaded in the current directory. This map will then become the current map that gameplay will take place in, instead of the default map.
+The user can choose to load a custom wall configuration file to the running program, by passing an argument in command line containing the file name loaded in the current directory. This map will then become the current map that gameplay will take place in, instead of the default map.
     
