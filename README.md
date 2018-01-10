@@ -1,6 +1,6 @@
 <h2>"Snake Game" Final Project : Part 2 (Final Submission)</h2>
 
-**The classes contained within this repository are the work of <i>Pablo Edgar</i> and are for reference only
+<b>**The classes contained within this repository are the work of <i>Pablo Edgar</i> and are for reference only<b>
 
 <h3>CONTENTS OF THIS FILE</h3>
 —————————————————
